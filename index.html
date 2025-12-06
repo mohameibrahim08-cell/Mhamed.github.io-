@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mohamed Ibrahim — Data Entry Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f9fc;
+    --text:#1f1f1f;
+    --accent:#1dbf73; /* Fiverr-like green */
+    --muted:#6b7280;
+    --card:#ffffff;
+    --glass: rgba(255,255,255,0.6);
+  }
+  body.dark{
+    --bg:#0f1724;
+    --text:#e6eef8;
+    --accent:#22c77a;
+    --muted:#98a0b3;
+    --card:#0b1220;
+    --glass: rgba(255,255,255,0.04);
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:"Cairo",system-ui,Arial; background:var(--bg); color:var(--text);
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* NAV */
+  .nav{
+    position:fixed; top:12px; left:50%; transform:translateX(-50%);
+    display:flex; gap:18px; background:rgba(10,12,20,0.55); padding:8px 18px; border-radius:999px;
+    z-index:9999; box-shadow:0 6px 20px rgba(5,7,14,0.25); backdrop-filter: blur(6px)
+  }
+  .nav a{ color:#ffd166; text-decoration:none; font-weight:600; font-size:14px }
+  .nav a:hover{ color:#fff }
+
+  /* toggle */
+  .toggle{
+    position:fixed; right:18px; top:14px; z-index:10000;
+    background:var(--card); border: none; padding:8px 12px; border-radius:10px; cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.12);
+  }
+
+  /* HEADER */
+  header{
+    height:420px; display:flex; align-items:center; justify-content:center; text-align:center;
+    background-image:url('https://i.ibb.co/20QJ6BDN/data-entry-projects-Data-Entry-operator.jpg');
+    background-position:center; background-size:cover; position:relative; overflow:hidden;
+  }
+  /* subtle overlay for legibility */
+  header .overlay{
+    position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.35));
+  }
+  header .hero{
+    position:relative; z-index:2; max-width:1000px; width:100%; padding:28px;
+    color:#fff;
+  }
+  .avatar{
+    width:150px; height:150px; border-radius:50%; object-fit:cover; border:4px solid rgba(255,255,255,0.95);
+    box-shadow:0 6px 22px rgba(4,6,12,0.45); display:inline-block;
+  }
+  header h1{ font-size:42px; margin:14px 0 6px; letter-spacing:0.2px; }
+  header p.lead{ font-size:18px; margin:0 0 10px; opacity:0.95 }
+
+  /* MAIN LAYOUT */
+  main{ padding:36px 20px 80px; max-width:1200px; margin: -70px auto 60px; position:relative; z-index:3 }
+
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+    border-radius:14px; padding:22px; box-shadow:0 14px 40px rgba(12,16,30,0.08);
+  }
+  body.dark .card{
+    background: linear-gradient(180deg, rgba(6,10,18,0.6), rgba(6,10,18,0.5));
+  }
+
+  /* About */
+  .about{ margin-bottom:28px; text-align:center }
+  .about .bio{ max-width:900px; margin:0 auto; font-size:17px; line-height:1.75; color:var(--muted) }
+
+  /* SERVICES GRID */
+  .services-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:18px }
+  .service{
+    border-radius:12px; padding:18px; color:#fff; min-height:170px; display:flex; flex-direction:column; gap:12px;
+    transform:translateY(18px); opacity:0; transition:all .6s cubic-bezier(.2,.9,.3,1);
+    background-size:200% 200%; box-shadow:0 10px 30px rgba(2,6,12,0.12);
+  }
+  .service.show{ transform:none; opacity:1 }
+  .service img.icon{ width:60px; height:60px; object-fit:contain; background:rgba(255,255,255,0.08); padding:8px; border-radius:10px }
+  .service h3{ margin:0; font-size:20px }
+  .service p{ margin:0; line-height:1.5; color:rgba(255,255,255,0.95) }
+
+  /* Gradients per type (vibrant like global platforms) */
+  .g-excel{ background: linear-gradient(135deg,#23c07a,#1a8a5a) }
+  .g-sheets{ background: linear-gradient(135deg,#3ad47f,#2a923d) }
+  .g-pdf{ background: linear-gradient(135deg,#4da6ff,#0066cc) }
+  .g-virtual{ background: linear-gradient(135deg,#7b61ff,#5a3fff) }
+
+  /* Portfolio */
+  .portfolio-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:14px }
+  .thumb{ border-radius:12px; overflow:hidden; position:relative; border:2px solid rgba(0,0,0,0.04) }
+  .thumb img{ width:100%; height:220px; object-fit:cover; display:block; transition:transform .35s ease, box-shadow .35s }
+  .thumb:hover img{ transform:scale(1.06); box-shadow:0 20px 50px rgba(2,6,20,0.18) }
+
+  /* CONTACT */
+  .contact{ display:flex; gap:18px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:16px }
+  .contact .btn{
+    display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; text-decoration:none; font-weight:600;
+    background:var(--card); color:var(--text); box-shadow:0 6px 20px rgba(3,8,20,0.06);
+  }
+  .contact .btn .ico{ width:22px; height:22px; display:inline-block }
+
+  /* footer */
+  footer{ text-align:center; margin-top:36px; color:var(--muted); padding:28px 8px }
+
+  /* responsive tweaks */
+  @media(max-width:900px){ header{padding:110px 18px} header h1{font-size:32px} header p.lead{font-size:16px} }
+  @media(max-width:600px){ .nav{left:12px; transform:none} .nav a{font-size:13px} .avatar{width:120px;height:120px} main{margin-top:-50px; padding:18px} }
+
+  /* small util */
+  .muted{ color:var(--muted) }
+  .inline-links a{ color:var(--accent); text-decoration:none; font-weight:700 }
+  .pill{ background:var(--glass); padding:6px 10px; border-radius:999px; display:inline-block; color:var(--text); font-weight:600 }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="nav" role="navigation" aria-label="main navigation">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- theme toggle -->
+  <button class="toggle" id="themeToggle" title="Toggle dark / light">Toggle</button>
+
+  <!-- HERO / HEADER -->
+  <header role="banner">
+    <div class="overlay" aria-hidden="true"></div>
+    <div class="hero">
+      <!-- avatar: replace with your image link or file -->
+      <img class="avatar" src="https://i.ibb.co/FqBXxDZg/Picsart-25-06-09-14-40-02-614.jpg" alt="Mohamed Ibrahim">
+      <h1>Mohamed Ibrahim</h1>
+      <p class="lead">Professional Data Entry • Excel & Google Sheets • Fast — Accurate — Secure</p>
+      <div style="margin-top:12px">
+        <span class="pill">Fiverr-style Portfolio</span>
+        &nbsp;<span class="pill">Upwork-inspired Layout</span>
+        &nbsp;<span class="pill">LinkedIn-ready Bio</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- ABOUT -->
+    <section id="about" class="card about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About Me</h2>
+      <p class="bio">
+        Hi — I'm <strong>Mohamed Ibrahim</strong>. I build clean, accurate spreadsheets and organize large datasets for businesses and freelancers.
+        I specialize in Excel formulas, sheets architecture, PDF → Excel conversion and end-to-end data workflows. I combine speed with accuracy to
+        deliver professional results used by clients on Fiverr, Upwork and LinkedIn.
+      </p>
+      <div class="inline-links muted" style="margin-top:8px">
+        <span>Find me on:</span>
+        &nbsp;<a href="https://www.fiverr.com/your_fiverr_username" target="_blank" rel="noopener">Fiverr</a>
+        &nbsp;•&nbsp;<a href="https://www.upwork.com" target="_blank" rel="noopener">Upwork</a>
+        &nbsp;•&nbsp;<a href="https://www.linkedin.com/in/your_linkedin" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="card" aria-labelledby="services-heading" style="margin-top:22px">
+      <h2 id="services-heading">Services</h2>
+
+      <div class="services-grid" id="servicesGrid">
+        <div class="service g-excel" data-anim>
+          <img class="icon" src="https://img.icons8.com/fluency/96/microsoft-excel-2019.png" alt="">
+          <h3>Excel Data Entry & Formatting</h3>
+          <p>Clean tables, formulas, conditional formatting, and dashboards for decision-ready sheets.</p>
+        </div>
+
+        <div class="service g-sheets" data-anim>
+          <img class="icon" src="https://img.icons8.com/color/96/google-sheets.png" alt="">
+          <h3>Google Sheets Setup & Automation</h3>
+          <p>Shared sheets, protected ranges, scripts, and automated imports for collaborative workflows.</p>
+        </div>
+
+        <div class="service g-pdf" data-anim>
+          <img class="icon" src="https://img.icons8.com/color/96/pdf.png" alt="">
+          <h3>PDF → Excel Conversion</h3>
+          <p>Accurate conversions keeping columns, headers and formatting intact (scanned & digital PDFs).</p>
+        </div>
+
+        <div class="service g-virtual" data-anim>
+          <img class="icon" src="https://img.icons8.com/color/96/virtual-reality.png" alt="">
+          <h3>Virtual Assistant & Data Tasks</h3>
+          <p>Data collection, web research, form filling, and daily admin support that frees your time.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="card" aria-labelledby="portfolio-heading" style="margin-top:22px">
+      <h2 id="portfolio-heading">Portfolio</h2>
+      <div class="portfolio-grid" aria-live="polite">
+        <figure class="thumb"><img src="https://i.ibb.co/3YvVQhhd/Screenshot-2025-11-20-223108.png" alt="Project sample 1"></figure>
+        <figure class="thumb"><img src="https://i.ibb.co/M5M4zhS2/Screenshot-2025-11-20-223256.png" alt="Project sample 2"></figure>
+        <figure class="thumb"><img src="https://i.ibb.co/XfkpLnLL/Screenshot-2025-11-20-223344.png" alt="Project sample 3"></figure>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="card" aria-labelledby="contact-heading" style="margin-top:22px; text-align:center">
+      <h2 id="contact-heading">Contact</h2>
+      <div class="contact" role="contentinfo">
+        <a class="btn" href="mailto:mohameibrahim08@gmail.com"><img class="ico" src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg" alt=""> Email</a>
+        <a class="btn" href="tel:+201060771999"><img class="ico" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""> WhatsApp</a>
+        <a class="btn" href="https://www.fiverr.com/your_fiverr_username" target="_blank"><img class="ico" src="https://i.ibb.co/5XYXmg6m/fiverr-2018.avif" alt=""> Fiverr</a>
+      </div>
+
+      <div style="margin-top:16px" class="muted">
+        <div>Also: <a href="https://www.linkedin.com/in/your_linkedin" target="_blank">LinkedIn</a> • <a href="https://www.facebook.com/your_username" target="_blank">Facebook</a></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2025 Mohamed Ibrahim — Built for freelancers & small businesses
+  </footer>
+
+<script>
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+  });
+
+  // Animate service cards into view
+  const cards = document.querySelectorAll('[data-anim]');
+  function revealCards(){
+    const trigger = window.innerHeight * 0.84;
+    cards.forEach((c,i)=>{
+      const top = c.getBoundingClientRect().top;
+      if(top < trigger) c.classList.add('show');
+    });
+  }
+  window.addEventListener('scroll', revealCards);
+  window.addEventListener('load', revealCards);
+  revealCards();
+
+  // Smooth nav scroll
+  document.querySelectorAll('.nav a').forEach(a=>{
+    a.addEventListener('click', e=>{
+      e.preventDefault();
+      const id = a.getAttribute('href');
+      document.querySelector(id).scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  // small accessibility: allow toggle by keyboard
+  themeToggle.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' ') themeToggle.click();
+  });
+</script>
+</body>
+</html>
